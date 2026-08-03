@@ -23,4 +23,4 @@ jobs:
           pip install duckdb pandas requests
 
       - name: Ejecutar script de procesamiento de datos
-        run: python prueba_duckdb.py
+        run: python cargar_indicadores.py
