@@ -1,4 +1,15 @@
-- name: Copiar repositorio en el servidor de GitHub
+name: Actualizar Canasta Automatica
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1'
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copiar repositorio en el servidor de GitHub
         uses: actions/checkout@v4
         with:
           persist-credentials: true
