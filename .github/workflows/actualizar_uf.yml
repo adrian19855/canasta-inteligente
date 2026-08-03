@@ -1,15 +1,15 @@
-name: Actualizar Canasta Automatica
+name: Actualizar UF Mensual
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '0 8 10 * *' # Todos los días 10 de cada mes a las 08:00 UTC
 
 jobs:
-  run-pipeline:
+  run-uf:
     runs-on: ubuntu-latest
     steps:
-      - name: Copiar repositorio en el servidor de GitHub
+      - name: Copiar repositorio
         uses: actions/checkout@v4
         with:
           persist-credentials: true
@@ -24,17 +24,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install duckdb pandas requests
 
-      - name: Ejecutar script de procesamiento de datos
-        run: python cargar_indicadores.py
+      - name: Ejecutar carga de UF
+        run: python cargar_uf.py
 
-      - name: Configurar usuario de Git en el servidor
+      - name: Configurar Git y subir cambios
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Guardar y subir base de datos actualizada
-        run: |
           git status
           git add canasta.duckdb
-          git commit -m "Actualización automática de DuckDB con indicadores [skip ci]" || echo "No hay cambios para commitear"
+          git commit -m "Actualización automática de UF mensual [skip ci]" || echo "No hay cambios"
           git push origin main
