@@ -24,3 +24,15 @@ jobs:
 
       - name: Ejecutar script de procesamiento de datos
         run: python cargar_indicadores.py
+
+      - name: Configurar usuario de Git en el servidor
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Guardar y subir base de datos actualizada
+        run: |
+          git status
+          git add canasta.duckdb
+          git commit -m "Actualización automática de DuckDB con indicadores [skip ci]" || echo "No hay cambios para commitear"
+          git push
