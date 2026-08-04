@@ -5,7 +5,7 @@ from datetime import datetime
 def cargar_uf_mensual():
     print("Conectando con la API para la serie de UF...")
     url = "https://mindicador.cl/api/uf"
-    response = requests.get(url)
+    response = requests.get(url, timeout=15)
     
     if response.status_code == 200:
         data = response.json()
