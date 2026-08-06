@@ -27,8 +27,8 @@ jobs:
       #- name: [2/3] Ejecutar Ingesta Santa Isabel
       #  run: python scraping_santaisabel_bronze.py
 
-      - name: [3/3] Ejecutar Ingesta Lider
-        run: python scraping_lider_bronze.py
+      #- name: [3/3] Ejecutar Ingesta Lider
+      #  run: python scraping_lider_bronze.py
 
       # --- SUBIDA FIN DE JORNADA ---
       - name: Guardar base de datos consolidada
