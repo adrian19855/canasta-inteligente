@@ -1,9 +1,7 @@
 name: Actualizar Dolar Diario
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 8 * * 1-5' # De lunes a viernes a las 08:00 UTC
+  workflow_dispatch:      # <-- SOLO botón manual. ¡Cero ejecuciones automáticas!
 
 jobs:
   run-dolar:

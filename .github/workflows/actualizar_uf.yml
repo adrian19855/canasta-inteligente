@@ -3,7 +3,7 @@ name: Actualizar UF Mensual
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 10 * *' # Todos los días 10 de cada mes a las 08:00 UTC
+    - cron: '0 6 10 * *' # Todos los días 10 de cada mes a las 08:00 UTC
 
 jobs:
   run-uf:
