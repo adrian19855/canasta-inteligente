@@ -1,13 +1,14 @@
 name: Orquestador Diario - Canasta Completa (Bronze)
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:          # Permite ejecutarlo con el botón manual "Run workflow" en GitHub
   schedule:
-    - cron: '0 10 * * *'       # 03:00 AM Chile
+    - cron: '0 7 * * *'       # Se ejecuta a las 03:00 AM de Chile (07:00 UTC)
 
 jobs:
   pipeline-maestro:
     runs-on: ubuntu-latest
+
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4
@@ -24,18 +25,19 @@ jobs:
       - name: [1/3] Ejecutar Ingesta Jumbo
         run: python scraping_jumbo_bronze.py
 
-      #- name: [2/3] Ejecutar Ingesta Santa Isabel
-      #  run: python scraping_santaisabel_bronze.py
+      # (Cuando tengamos listos los otros scrapers, solo les quitas el '#' al inicio de cada línea)
+      # - name: [2/3] Ejecutar Ingesta Santa Isabel
+      #   run: python scraping_santaisabel_bronze.py
 
-      #- name: [3/3] Ejecutar Ingesta Lider
-      #  run: python scraping_lider_bronze.py
+      # - name: [3/3] Ejecutar Ingesta Lider
+      #   run: python scraping_lider_bronze.py
 
-      # --- SUBIDA FIN DE JORNADA ---
+      # --- SUBIDA FIN DE JORNADA (BLINDADA CONTRA RECHAZOS) ---
       - name: Guardar base de datos consolidada
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add canasta.duckdb
-          git commit -m "🛒 Carga diaria consolidada: Jumbo + Santa Isabel + Lider [skip ci]" || echo "Sin cambios"
+          git commit -m "🛒 Carga diaria consolidada: Canasta Básica Jumbo [skip ci]" || echo "Sin cambios por guardar"
           git pull origin main --rebase
           git push origin main
